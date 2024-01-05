@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShortageManager.Repositories;
 
 namespace ShortageManager;
 
@@ -14,6 +15,12 @@ class Program
 
     public static IHostBuilder CreateHostBuilder(string[] args)
     {
-        return Host.CreateDefaultBuilder(args);
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureServices((context, services) =>
+            {
+                services.AddSingleton<IShortageRepository, ShortageRepository>();
+
+                services.AddSingleton<App>();
+            });
     }
 }
