@@ -10,4 +10,5 @@ public class Shortage
     public CategoryType Category { get; set; }
     public int Priority { get; set; }
     public DateTime CreatedOn { get; set; }
+    public string Creator { get; set; }
 }

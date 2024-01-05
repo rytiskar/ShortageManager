@@ -19,6 +19,7 @@ public class App
         shortage1.Name = "name";
         shortage1.Priority = 5;
         shortage1.CreatedOn = DateTime.Now;
+        shortage1.Creator = "abc";
 
         _shortageRepository.SaveShortage(shortage1);
 
@@ -27,6 +28,7 @@ public class App
         shortage2.Name = "shortage";
         shortage2.Priority = 2;
         shortage2.CreatedOn = DateTime.Now;
+        shortage2.Creator = "hey";
 
         _shortageRepository.SaveShortage(shortage2);
 

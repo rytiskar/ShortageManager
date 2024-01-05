@@ -44,6 +44,23 @@ public class ShortageRepository : IShortageRepository
         return JsonSerializer.Deserialize<List<Shortage>>(fileContent, _jsonSerializerOptions);
     }
 
+    public List<Shortage>? LoadUserShortages(string user)
+    {
+        List<Shortage>? shortages = LoadShortages();
+
+        if (shortages != null)
+        {
+            if (user == "manager")
+            {
+                return shortages;
+            }
+            List<Shortage> userShortages = shortages.Where(s => s.Creator == user).ToList();
+            return userShortages;
+        }
+        return null;
+    }
+
+
     public void DeleteShortage(Shortage shortage)
     {
         List<Shortage>? shortages = LoadShortages();
