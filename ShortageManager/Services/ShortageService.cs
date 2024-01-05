@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace ShortageManager.Services;
 
-public class ShortageService
+public class ShortageService : IShortageService
 {
     private readonly IShortageRepository _shortageRepository;
 
@@ -13,8 +13,8 @@ public class ShortageService
         _shortageRepository = shortageRepository;
     }
 
-    public List<Shortage>? FilterShortages(string user, string titleFilter = null, DateTime? createdOnStart = null,
-        DateTime? createdOnEnd = null, string categoryFilter = null, string roomFilter = null)
+    public List<Shortage>? FilterShortages(string user, string? titleFilter = null, DateTime? createdOnStart = null,
+        DateTime? createdOnEnd = null, string? categoryFilter = null, string? roomFilter = null)
     {
         List<Shortage>? shortages = _shortageRepository.LoadUserShortages(user);
 

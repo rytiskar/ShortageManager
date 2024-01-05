@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShortageManager.Repositories;
+using ShortageManager.Services;
 
 namespace ShortageManager;
 
@@ -19,7 +20,7 @@ class Program
             .ConfigureServices((context, services) =>
             {
                 services.AddSingleton<IShortageRepository, ShortageRepository>();
-
+                services.AddSingleton<IShortageService, ShortageService>();
                 services.AddSingleton<App>();
             });
     }
