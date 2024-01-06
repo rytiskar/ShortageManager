@@ -1,6 +1,9 @@
 ﻿using ShortageManager.Models;
 using ShortageManager.Repositories;
 using ShortageManager.Services;
+using CommandLine;
+using ShortageManager.Commands;
+using ConsoleTables;
 
 namespace ShortageManager;
 
@@ -15,53 +18,74 @@ public class App
         _shortageService = shortageService;
     }
 
-    public void Run()
+    public void Run(string[] args)
     {
-        Shortage shortage1 = new Shortage();
-        shortage1.Title = "titleA";
-        shortage1.Name = "name";
-        shortage1.Priority = 5;
-        shortage1.CreatedOn = DateTime.Now;
-        shortage1.Room = (Enums.RoomType)1;
-        shortage1.Creator = "user";
 
-        _shortageRepository.SaveShortage(shortage1);
-        
-        Shortage shortage2 = new Shortage();
-        shortage2.Title = "titleB";
-        shortage2.Name = "name";
-        shortage2.Priority = 10;
-        shortage2.CreatedOn = DateTime.Now;
-        shortage2.Room = (Enums.RoomType)1;
-        shortage2.Creator = "user";
+        var result = Parser.Default.ParseArguments<RegisterCommand, ListCommand, DeleteCommand>(args)
+            .MapResult(
+                (RegisterCommand registerCommand) =>
+                {
+                    int returnStatus = registerCommand.ExecuteCommand(_shortageService);
+                    switch (returnStatus)
+                    {
+                        case 0:
+                            Console.WriteLine("Shortage was added successfully");
+                            break;
 
-        _shortageRepository.SaveShortage(shortage2);
+                        case 1:
+                            Console.WriteLine("Shortage was updated");
+                            break;
 
-        Shortage shortage3 = new Shortage();
-        shortage3.Title = "shortage";
-        shortage3.Name = "shortageName";
-        shortage3.Priority = 2;
-        shortage3.CreatedOn = DateTime.Now;
-        shortage3.Room = (Enums.RoomType)2;
-        shortage3.Creator = "user2";
+                        case 2:
+                            Console.WriteLine("Shortage already exists");
+                            break;
 
-        _shortageRepository.SaveShortage(shortage3);
+                        default:
+                            Console.WriteLine("Unexpected return status");
+                            break;
+                    }
+                    return 0; 
+                },
+                (ListCommand listCommand) =>
+                {
+                    var shortages = listCommand.ExecuteCommand(_shortageService);
+                    DisplayData(shortages);
+                    return 0; 
+                },
+                (DeleteCommand deleteCommand) =>
+                {
+                    bool noShortagesFound = deleteCommand.ExecuteCommand(_shortageService);
+                    if(noShortagesFound)
+                    {
+                        Console.WriteLine("No request with specified shortage details was found");
+                        return 1;
+                    }
+                    Console.WriteLine("Shortage request was deleted successfully");
+                    return 0;
+                },
+                errors =>
+                {
+                    Console.WriteLine("Invalid arguments");
+                    return 1; 
+                });
 
-        var filteredShortages = _shortageService.FilterShortages("manager", null, null, null, null, null);
-        
-        foreach(var shortage in filteredShortages)
+    }
+
+    public void DisplayData(List<Shortage>? shortages)
+    {
+        if (shortages == null || shortages.Count == 0)
         {
-            Console.WriteLine(shortage.Title);
-            Console.WriteLine(shortage.Name);
-            Console.WriteLine(shortage.Creator);
-            /*Console.WriteLine(shortage.Room.ToString());*/
-            Console.WriteLine("");
+            Console.WriteLine("No shortages to display");
+            return;
         }
 
-        /*_shortageRepository.DeleteShortage(shortage1);*/
+        var table = new ConsoleTable("Title", "Name", "Room", "Category", "Priority", "CreatedOn");
 
+        foreach (var shortage in shortages)
+        {
+            table.AddRow(shortage.Title, shortage.Name, shortage.Room, shortage.Category, shortage.Priority, shortage.CreatedOn);
+        }
 
-
-
+        Console.WriteLine(table.ToString());
     }
 }

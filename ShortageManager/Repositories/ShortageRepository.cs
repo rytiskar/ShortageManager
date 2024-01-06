@@ -1,4 +1,5 @@
-﻿using ShortageManager.Models;
+﻿using ShortageManager.Enums;
+using ShortageManager.Models;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
@@ -11,25 +12,30 @@ public class ShortageRepository : IShortageRepository
     private readonly string _filepath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "Data", "shortages.json");
     private readonly JsonSerializerOptions _jsonSerializerOptions = new() { WriteIndented = true };
 
-    public bool SaveShortage(Shortage shortage)
+    /* Returns
+     * 0 - shortage was added 
+     * 1 - shortage was overrided
+     * 2 - shortage already exists
+    */
+    public int SaveShortage(Shortage shortage)
     {
         List<Shortage>? shortages = LoadShortages();
         Shortage? existingShortage = shortages.FirstOrDefault(s => s.Title == shortage.Title && s.Room == shortage.Room);
-        bool shortageUpdated = false;
         
         if(existingShortage == null)
         {
             shortages.Add(shortage);
+            SaveShortages(shortages);
+            return 0;
         }
-        else if(shortage.Priority > existingShortage.Priority)
+        if(existingShortage != null && shortage.Priority > existingShortage.Priority)
         {
             existingShortage.Priority = shortage.Priority;
             existingShortage.CreatedOn = shortage.CreatedOn;
-            shortageUpdated = true;
+            SaveShortages(shortages);
+            return 1; 
         }
-
-        SaveShortages(shortages);
-        return shortageUpdated; 
+        return 2;
     }
 
     private void SaveShortages(List<Shortage> shortages)
@@ -50,7 +56,7 @@ public class ShortageRepository : IShortageRepository
 
         if (shortages != null)
         {
-            if (user == "manager")
+            if (user == "admin")
             {
                 return shortages;
             }
@@ -61,14 +67,21 @@ public class ShortageRepository : IShortageRepository
     }
 
 
-    public void DeleteShortage(Shortage shortage)
+    public bool DeleteShortage(string user, string title, RoomType room)
     {
+        bool noShortagesFound = true;
         List<Shortage>? shortages = LoadShortages();
         if(shortages != null)
         {
-            shortages.RemoveAll(s => s.Title == shortage.Title && s.Name == shortage.Name);
-            SaveShortages(shortages);
+            if (shortages.RemoveAll(s => s.Creator == user && s.Title == title && s.Room == room) == 0)
+                return noShortagesFound;
+            else
+            {
+                SaveShortages(shortages);
+                noShortagesFound = false;
+            }
         }
+        return noShortagesFound;
     }
 
 }

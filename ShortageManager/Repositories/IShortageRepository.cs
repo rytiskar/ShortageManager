@@ -1,19 +1,11 @@
-﻿using ShortageManager.Models;
+﻿using ShortageManager.Enums;
+using ShortageManager.Models;
 
 namespace ShortageManager.Repositories;
 
 public interface IShortageRepository
 {
-    bool SaveShortage(Shortage shortage);
+    int SaveShortage(Shortage shortage);
     List<Shortage>? LoadUserShortages(string user);
-    //List<Shortage>? LoadShortages();
-    /*void SaveShortages(List<Shortage> shortages);
-    List<Shortage>? LoadShortages();*/
-    void DeleteShortage(Shortage shortage);
-/*    List<Shortage> ListShortages(string userName, DateTime? createdOnStart, DateTime? createdOnEnd, string titleFilter, string categoryFilter, string roomFilter);
-
-    // Get all shortages (for administrators)
-    List<Shortage> GetAllShortages();
-    bool ShortageExists(string title, string room);
-    void UpdatePriority(string title, string room, int newPriority);*/
+    bool DeleteShortage(string user, string title, RoomType room);
 }

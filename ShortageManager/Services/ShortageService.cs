@@ -1,4 +1,5 @@
-﻿using ShortageManager.Models;
+﻿using ShortageManager.Enums;
+using ShortageManager.Models;
 using ShortageManager.Repositories;
 using System.Text.RegularExpressions;
 
@@ -13,7 +14,22 @@ public class ShortageService : IShortageService
         _shortageRepository = shortageRepository;
     }
 
-    public List<Shortage>? FilterShortages(string user, string? titleFilter = null, DateTime? createdOnStart = null,
+    public int RegisterShortage(string user, string title, string name, RoomType room, CategoryType category,
+        int priority)
+    {
+        Shortage shortage = new Shortage();
+        shortage.Title = title;
+        shortage.Name = name;
+        shortage.Room = room;
+        shortage.Category = category;
+        shortage.Priority = priority;
+        shortage.CreatedOn = DateTime.Now;
+        shortage.Creator = user;
+
+        return _shortageRepository.SaveShortage(shortage);
+    }
+
+    public List<Shortage>? ListFilteredShortages(string user, string? titleFilter = null, DateTime? createdOnStart = null,
         DateTime? createdOnEnd = null, string? categoryFilter = null, string? roomFilter = null)
     {
         List<Shortage>? shortages = _shortageRepository.LoadUserShortages(user);
@@ -34,6 +50,11 @@ public class ShortageService : IShortageService
             return filteredShortages;
         }
         return null;
+    }
+
+    public bool DeleteShortage(string user, string title, RoomType room)
+    {
+        return _shortageRepository.DeleteShortage(user, title, room);
     }
 
 }

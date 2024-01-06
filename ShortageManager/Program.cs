@@ -11,7 +11,7 @@ class Program
     {
         var host = CreateHostBuilder(args).Build();
         var app = ActivatorUtilities.CreateInstance<App>(host.Services);
-        app.Run();
+        app.Run(args);
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)
