@@ -30,6 +30,10 @@
 - `<Title>`: Title of the shortage.
 - `<Room>`: Room where the shortage is located (MeetingRoom / kitchen / bathroom).
 
+
+**Note:** Users with the role "admin" (replace `<User>` with "admin") have the ability to manage shortages globally.
+
+
 ## Getting Started
 
 1. Clone the repository.
