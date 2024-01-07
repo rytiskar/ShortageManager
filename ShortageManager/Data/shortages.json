@@ -43,5 +43,23 @@
     "Priority": 1,
     "CreatedOn": "2024-01-06T19:47:09.3958983+02:00",
     "Creator": "Mark"
+  },
+  {
+    "Title": "Wireless Spreaker",
+    "Name": "spreaker",
+    "Room": 0,
+    "Category": 0,
+    "Priority": 1,
+    "CreatedOn": "2024-01-06T19:50:09.3958983+02:00",
+    "Creator": "Mark"
+  },
+  {
+    "Title": "Wireless Spreaker (Sony)",
+    "Name": "Sony",
+    "Room": 0,
+    "Category": 0,
+    "Priority": 1,
+    "CreatedOn": "2024-01-06T19:55:09.3958983+02:00",
+    "Creator": "Mark"
   }
 ]

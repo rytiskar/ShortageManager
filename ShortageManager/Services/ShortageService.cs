@@ -41,8 +41,8 @@ public class ShortageService : IShortageService
             List<Shortage> filteredShortages = shortages
                 .Where(s =>
                     (string.IsNullOrEmpty(titleFilter) || titleRegex.IsMatch(s.Title)) &&
-                    (!createdOnStart.HasValue || s.CreatedOn >= createdOnStart.Value) &&
-                    (!createdOnEnd.HasValue || s.CreatedOn <= createdOnEnd.Value) &&
+                    (!createdOnStart.HasValue || s.CreatedOn.Date >= createdOnStart.Value.Date) &&
+                    (!createdOnEnd.HasValue || s.CreatedOn.Date <= createdOnEnd.Value.Date) &&
                     (string.IsNullOrEmpty(categoryFilter) || s.Category.ToString().Equals(categoryFilter, StringComparison.OrdinalIgnoreCase)) &&
                     (string.IsNullOrEmpty(roomFilter) || s.Room.ToString().Equals(roomFilter, StringComparison.OrdinalIgnoreCase)))
                 .OrderByDescending(s => s.Priority) 

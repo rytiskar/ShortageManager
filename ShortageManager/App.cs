@@ -63,10 +63,14 @@ public class App
                     Console.WriteLine("Shortage request was deleted successfully");
                     return 0;
                 },
-                errors =>
+                error =>
                 {
-                    Console.WriteLine("Invalid arguments");
-                    return 1; 
+                    if(!(args.Contains("--help") || args.Contains("help")))
+                    {
+                        Console.WriteLine("Invalid arguments");
+                        return 1; 
+                    }
+                    return 0;
                 });
 
     }

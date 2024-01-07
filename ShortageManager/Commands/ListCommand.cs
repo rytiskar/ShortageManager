@@ -27,14 +27,8 @@ public class ListCommand
 
     public List<Shortage>? ExecuteCommand(IShortageService shortageService)
     {
-        DateTime? createdOnStart = null;
-        DateTime? createdOnEnd = null;
-
-        if (DateTime.TryParse(CreatedOnStart, out var start) && (DateTime.TryParse(CreatedOnEnd, out var end)))
-        {
-            createdOnStart = start;
-            createdOnEnd = end;
-        }
+        DateTime? createdOnStart = DateTime.TryParse(CreatedOnStart, out var start) ? start : (DateTime?)null;
+        DateTime? createdOnEnd = DateTime.TryParse(CreatedOnEnd, out var end) ? end : createdOnStart;
 
         return shortageService.ListFilteredShortages(User, TitleFilter, 
             createdOnStart, createdOnEnd, CategoryFilter, RoomFilter);
