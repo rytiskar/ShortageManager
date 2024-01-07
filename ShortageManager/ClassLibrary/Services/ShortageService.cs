@@ -2,6 +2,7 @@
 using ShortageManager.ClassLibrary.Models;
 using ShortageManager.ClassLibrary.Repositories;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace ShortageManager.ClassLibrary.Services;
 
@@ -14,25 +15,64 @@ public class ShortageService : IShortageService
         _shortageRepository = shortageRepository;
     }
 
+    /* Returns
+     * 0 - shortage was added 
+     * 1 - shortage was overrided
+     * 2 - shortage already exists
+    */
     public int RegisterShortage(string user, string title, string name, RoomType room, CategoryType category,
         int priority)
     {
-        Shortage shortage = new Shortage();
-        shortage.Title = title;
-        shortage.Name = name;
-        shortage.Room = room;
-        shortage.Category = category;
-        shortage.Priority = priority;
-        shortage.CreatedOn = DateTime.Now;
-        shortage.Creator = user;
+        Shortage shortage = new Shortage()
+        {
+            Title = title,
+            Name = name,
+            Room = room,
+            Category = category,
+            Priority = priority,
+            CreatedOn = DateTime.Now,
+            Creator = user,
+        };
 
-        return _shortageRepository.SaveShortage(shortage);
+        List<Shortage>? shortages = _shortageRepository.LoadShortages();
+        Shortage? existingShortage = shortages.FirstOrDefault(s => s.Title == shortage.Title && s.Room == shortage.Room);
+
+        if (existingShortage == null)
+        {
+            shortages.Add(shortage);
+            _shortageRepository.SaveShortages(shortages);
+            return 0;
+        }
+        if (existingShortage != null && shortage.Priority > existingShortage.Priority)
+        {
+            existingShortage.Priority = shortage.Priority;
+            existingShortage.CreatedOn = shortage.CreatedOn;
+            _shortageRepository.SaveShortages(shortages);
+            return 1;
+        }
+        return 2;
+    }
+
+    private List<Shortage>? GetUserShortages(string user)
+    {
+        List<Shortage>? shortages = _shortageRepository.LoadShortages();
+
+        if (shortages != null)
+        {
+            if (user == "admin")
+            {
+                return shortages;
+            }
+            List<Shortage> userShortages = shortages.Where(s => s.Creator == user).ToList();
+            return userShortages;
+        }
+        return null;
     }
 
     public List<Shortage>? ListFilteredShortages(string user, string? titleFilter = null, DateTime? createdOnStart = null,
         DateTime? createdOnEnd = null, string? categoryFilter = null, string? roomFilter = null)
     {
-        List<Shortage>? shortages = _shortageRepository.LoadUserShortages(user);
+        List<Shortage>? shortages = GetUserShortages(user);
 
         Regex titleRegex = new Regex(titleFilter ?? "", RegexOptions.IgnoreCase);
 
@@ -54,7 +94,32 @@ public class ShortageService : IShortageService
 
     public bool DeleteShortage(string user, string title, RoomType room)
     {
-        return _shortageRepository.DeleteShortage(user, title, room);
+        bool noShortagesFound = true;
+        List<Shortage>? shortages = _shortageRepository.LoadShortages();
+        if (shortages != null)
+        {
+            if(user == "admin")
+            {
+                if (shortages.RemoveAll(s => s.Title == title && s.Room == room) == 0)
+                    return noShortagesFound;
+                else
+                {
+                    _shortageRepository.SaveShortages(shortages);
+                    noShortagesFound = false;
+                }
+            }
+            else
+            {
+                if (shortages.RemoveAll(s => s.Creator == user && s.Title == title && s.Room == room) == 0)
+                    return noShortagesFound;
+                else
+                {
+                    _shortageRepository.SaveShortages(shortages);
+                    noShortagesFound = false;
+                }
+            }
+        }
+        return noShortagesFound;
     }
 
 }

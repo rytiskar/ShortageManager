@@ -1,23 +1,5 @@
 [
   {
-    "Title": "titleA",
-    "Name": "name",
-    "Room": 1,
-    "Category": 0,
-    "Priority": 10,
-    "CreatedOn": "2024-01-06T20:50:16.8696218+02:00",
-    "Creator": "user"
-  },
-  {
-    "Title": "titleB",
-    "Name": "name",
-    "Room": 1,
-    "Category": 0,
-    "Priority": 10,
-    "CreatedOn": "2024-01-05T18:54:13.3550037+02:00",
-    "Creator": "user"
-  },
-  {
     "Title": "shortage",
     "Name": "shortageName",
     "Room": 2,
@@ -45,7 +27,7 @@
     "Creator": "Mark"
   },
   {
-    "Title": "Wireless Spreaker",
+    "Title": "Wireless Speaker",
     "Name": "spreaker",
     "Room": 0,
     "Category": 0,
@@ -54,7 +36,7 @@
     "Creator": "Mark"
   },
   {
-    "Title": "Wireless Spreaker (Sony)",
+    "Title": "Wireless Speaker (Sony)",
     "Name": "Sony",
     "Room": 0,
     "Category": 0,

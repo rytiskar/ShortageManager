@@ -5,7 +5,6 @@ namespace ShortageManager.ClassLibrary.Repositories;
 
 public interface IShortageRepository
 {
-    int SaveShortage(Shortage shortage);
-    List<Shortage>? LoadUserShortages(string user);
-    bool DeleteShortage(string user, string title, RoomType room);
+    void SaveShortages(List<Shortage> shortages);
+    List<Shortage>? LoadShortages();
 }
