@@ -1,8 +1,8 @@
 ﻿using CommandLine;
-using ShortageManager.Enums;
-using ShortageManager.Services;
+using ShortageManager.ClassLibrary.Enums;
+using ShortageManager.ClassLibrary.Services;
 
-namespace ShortageManager.Commands;
+namespace ShortageManager.ClassLibrary.Commands;
 
 [Verb("register", HelpText = "Register a new shortage")]
 public class RegisterCommand

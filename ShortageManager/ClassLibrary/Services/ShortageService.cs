@@ -1,9 +1,9 @@
-﻿using ShortageManager.Enums;
-using ShortageManager.Models;
-using ShortageManager.Repositories;
+﻿using ShortageManager.ClassLibrary.Enums;
+using ShortageManager.ClassLibrary.Models;
+using ShortageManager.ClassLibrary.Repositories;
 using System.Text.RegularExpressions;
 
-namespace ShortageManager.Services;
+namespace ShortageManager.ClassLibrary.Services;
 
 public class ShortageService : IShortageService
 {

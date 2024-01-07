@@ -1,9 +1,9 @@
-﻿using ShortageManager.Models;
-using ShortageManager.Repositories;
-using ShortageManager.Services;
-using CommandLine;
-using ShortageManager.Commands;
+﻿using CommandLine;
 using ConsoleTables;
+using ShortageManager.ClassLibrary.Commands;
+using ShortageManager.ClassLibrary.Models;
+using ShortageManager.ClassLibrary.Repositories;
+using ShortageManager.ClassLibrary.Services;
 
 namespace ShortageManager;
 

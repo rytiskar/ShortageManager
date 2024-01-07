@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ShortageManager.Repositories;
-using ShortageManager.Services;
+using ShortageManager.ClassLibrary.Repositories;
+using ShortageManager.ClassLibrary.Services;
 
 namespace ShortageManager;
 

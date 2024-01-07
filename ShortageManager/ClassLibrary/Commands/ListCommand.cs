@@ -1,8 +1,8 @@
 ﻿using CommandLine;
-using ShortageManager.Models;
-using ShortageManager.Services;
+using ShortageManager.ClassLibrary.Models;
+using ShortageManager.ClassLibrary.Services;
 
-namespace ShortageManager.Commands;
+namespace ShortageManager.ClassLibrary.Commands;
 
 [Verb("list", HelpText = "List shortage requests with filtering options")]
 public class ListCommand

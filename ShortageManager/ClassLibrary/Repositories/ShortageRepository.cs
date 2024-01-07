@@ -1,11 +1,8 @@
-﻿using ShortageManager.Enums;
-using ShortageManager.Models;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
+﻿using ShortageManager.ClassLibrary.Enums;
+using ShortageManager.ClassLibrary.Models;
 using System.Text.Json;
 
-namespace ShortageManager.Repositories;
+namespace ShortageManager.ClassLibrary.Repositories;
 
 public class ShortageRepository : IShortageRepository
 {
@@ -21,19 +18,19 @@ public class ShortageRepository : IShortageRepository
     {
         List<Shortage>? shortages = LoadShortages();
         Shortage? existingShortage = shortages.FirstOrDefault(s => s.Title == shortage.Title && s.Room == shortage.Room);
-        
-        if(existingShortage == null)
+
+        if (existingShortage == null)
         {
             shortages.Add(shortage);
             SaveShortages(shortages);
             return 0;
         }
-        if(existingShortage != null && shortage.Priority > existingShortage.Priority)
+        if (existingShortage != null && shortage.Priority > existingShortage.Priority)
         {
             existingShortage.Priority = shortage.Priority;
             existingShortage.CreatedOn = shortage.CreatedOn;
             SaveShortages(shortages);
-            return 1; 
+            return 1;
         }
         return 2;
     }
@@ -43,7 +40,7 @@ public class ShortageRepository : IShortageRepository
         string updatedContent = JsonSerializer.Serialize(shortages, _jsonSerializerOptions);
         File.WriteAllText(_filepath, updatedContent);
     }
-    
+
     private List<Shortage>? LoadShortages()
     {
         string fileContent = File.ReadAllText(_filepath);
@@ -71,7 +68,7 @@ public class ShortageRepository : IShortageRepository
     {
         bool noShortagesFound = true;
         List<Shortage>? shortages = LoadShortages();
-        if(shortages != null)
+        if (shortages != null)
         {
             if (shortages.RemoveAll(s => s.Creator == user && s.Title == title && s.Room == room) == 0)
                 return noShortagesFound;

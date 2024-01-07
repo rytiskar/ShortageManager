@@ -1,6 +1,6 @@
-﻿using ShortageManager.Enums;
+﻿using ShortageManager.ClassLibrary.Enums;
 
-namespace ShortageManager.Models;
+namespace ShortageManager.ClassLibrary.Models;
 
 public class Shortage
 {

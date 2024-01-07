@@ -1,4 +1,4 @@
-﻿namespace ShortageManager.Enums;
+﻿namespace ShortageManager.ClassLibrary.Enums;
 
 public enum CategoryType
 {

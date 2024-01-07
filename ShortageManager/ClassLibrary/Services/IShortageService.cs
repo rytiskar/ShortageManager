@@ -1,7 +1,7 @@
-﻿using ShortageManager.Enums;
-using ShortageManager.Models;
+﻿using ShortageManager.ClassLibrary.Enums;
+using ShortageManager.ClassLibrary.Models;
 
-namespace ShortageManager.Services;
+namespace ShortageManager.ClassLibrary.Services;
 
 public interface IShortageService
 {
