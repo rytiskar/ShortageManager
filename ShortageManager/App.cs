@@ -9,12 +9,10 @@ namespace ShortageManager;
 
 public class App
 {
-    private readonly IShortageRepository _shortageRepository;
     private readonly IShortageService _shortageService;
 
-    public App(IShortageRepository shortageRepository, IShortageService shortageService)
+    public App(IShortageService shortageService)
     {
-        _shortageRepository = shortageRepository;
         _shortageService = shortageService;
     }
 

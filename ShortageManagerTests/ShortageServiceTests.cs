@@ -20,8 +20,6 @@ public class ShortageServiceTests
 
     }
 
-
-
     [Fact]
     public void RegisterShortage_ShouldReturnCorrectStatusCode_WhenAddingShortage()
     {

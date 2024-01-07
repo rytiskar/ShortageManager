@@ -1,15 +1,6 @@
 [
   {
-    "Title": "shortage",
-    "Name": "shortageName",
-    "Room": 2,
-    "Category": 0,
-    "Priority": 2,
-    "CreatedOn": "2024-01-05T18:54:13.4053779+02:00",
-    "Creator": "user2"
-  },
-  {
-    "Title": "Running out of pencils",
+    "Title": "Low on pencils",
     "Name": "Pencils",
     "Room": 1,
     "Category": 0,
@@ -18,7 +9,7 @@
     "Creator": "John"
   },
   {
-    "Title": "Ran out of water",
+    "Title": "Water shortage",
     "Name": "Water",
     "Room": 1,
     "Category": 1,
@@ -27,21 +18,12 @@
     "Creator": "Mark"
   },
   {
-    "Title": "Wireless Speaker",
-    "Name": "spreaker",
+    "Title": "Wireless Speaker malfunction",
+    "Name": "Speaker",
     "Room": 0,
     "Category": 0,
     "Priority": 1,
     "CreatedOn": "2024-01-06T19:50:09.3958983+02:00",
-    "Creator": "Mark"
-  },
-  {
-    "Title": "Wireless Speaker (Sony)",
-    "Name": "Sony",
-    "Room": 0,
-    "Category": 0,
-    "Priority": 1,
-    "CreatedOn": "2024-01-06T19:55:09.3958983+02:00",
     "Creator": "Mark"
   }
 ]
