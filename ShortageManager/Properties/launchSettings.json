@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ShortageManager": {
+      "commandName": "Project",
+      //"commandLineArgs": "register \"A\" \"titleA\" \"name\" \"Kitchen\" \"Electronics\" 8"
+      //"commandLineArgs": "list \"user\""
+      "commandLineArgs": "delete \"Mark\" \"Wireless Speaker\" \"MeetingRoom\""
+    }
+  }
+}
